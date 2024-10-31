@@ -6,11 +6,11 @@ namespace TAF.Core.UI.UIElements
 {
     public abstract class BaseUIElement : IBaseUIElement
     {
-        protected IWebDriver WebDriver => Helpers.WebDriverProvider.WebDriver;
+        //protected IWebDriver WebDriver => Helpers.WebDriverProvider.WebDriver;
+        protected IWebDriver WebDriver = Browser.Browser.Instance.WebDriver;
         protected By Locator { get; private set; }
-        private IWebElement _webElement;
 
-        protected BaseUIElement(By locator)
+        public BaseUIElement(By locator)
         {
             Locator = locator;
         }
@@ -22,15 +22,8 @@ namespace TAF.Core.UI.UIElements
             {
                 Waiter.WaitFor(() =>
                 {
-                    try
-                    {
-                        element = WebDriver.FindElement(Locator);
-                        return element != null;
-                    }
-                    catch (NoSuchElementException)
-                    {
-                        return false;
-                    }
+                    element = WebDriver.FindElement(Locator);
+                    return element.Enabled;
                 });
                 return element;
             }
@@ -38,11 +31,6 @@ namespace TAF.Core.UI.UIElements
             {
                 Log.Logger.Warning($"Element not found within the timeout period for locator: {Locator}");
                 return null;
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error(ex, "An unexpected error occurred while trying to find an element");
-                throw;
             }
         }
 
@@ -59,7 +47,7 @@ namespace TAF.Core.UI.UIElements
             }
         }
 
-        public virtual void Click()
+        public void Click()
         {
             try
             {
@@ -78,7 +66,7 @@ namespace TAF.Core.UI.UIElements
             }
         }
 
-        public virtual void InputText(string text)
+        public void InputText(string text)
         {
             try
             {
