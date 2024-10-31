@@ -12,5 +12,6 @@ namespace TAF.Core.Configuration
         public string Login { get; set; }
         public string Password { get; set; }
         public string BrowserType { get; set; }
+        public int TimeoutDefault { get; set; }
     }
 }

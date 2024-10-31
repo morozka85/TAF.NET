@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Serilog;
+using TAF.Core.Helpers;
 
 namespace TAF.Core.UI.UIElements
 {
@@ -16,14 +17,32 @@ namespace TAF.Core.UI.UIElements
 
         private IWebElement GetElement()
         {
+            IWebElement element = null;
             try
             {
-                return WebDriver.FindElement(Locator);
+                Waiter.WaitFor(() =>
+                {
+                    try
+                    {
+                        element = WebDriver.FindElement(Locator);
+                        return element != null;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return false;
+                    }
+                });
+                return element;
             }
-            catch (NoSuchElementException)
+            catch (TimeoutException)
             {
-                Log.Logger.Warning($"No element found matching locator: {Locator}");
+                Log.Logger.Warning($"Element not found within the timeout period for locator: {Locator}");
                 return null;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "An unexpected error occurred while trying to find an element");
+                throw;
             }
         }
 
@@ -75,7 +94,7 @@ namespace TAF.Core.UI.UIElements
 
         public string GetText()
         {
-            return WebElement.Text;
+            return WebElement.Text.ToString();
         }
 
         public bool IsDisplayed()

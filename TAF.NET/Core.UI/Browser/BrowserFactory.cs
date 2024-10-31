@@ -6,15 +6,6 @@ namespace TAF.Core.UI.Browser
 {
     public static class BrowserFactory
     {
-        public static IWebDriver GetDriver(string browserType)
-        {
-            return browserType switch
-            {
-                "Chrome" => new ChromeDriver(),
-                "Edge" => new EdgeDriver(),
-                _ => throw new ArgumentException($"Unsupported browser: {browserType}")
-            };
-        }
         private static ChromeOptions GetChromeOptions()
         {
             var options = new ChromeOptions();
@@ -28,6 +19,16 @@ namespace TAF.Core.UI.Browser
         {
             var options = new EdgeOptions();
             return options;
+        }
+
+        public static IWebDriver GetDriver(string browserType)
+        {
+            return browserType switch
+            {
+                "Chrome" => new ChromeDriver(),
+                "Edge" => new EdgeDriver(),
+                _ => throw new ArgumentException($"Unsupported browser: {browserType}")
+            };
         }
     }
 }

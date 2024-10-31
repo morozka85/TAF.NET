@@ -8,7 +8,10 @@ namespace TAF.Core.UI.UIElements
 {
     public interface ITextField : IBaseUIElement
     {
-        string Text { get; }
+        public string Text
+        {
+            get => GetText();
+        }
     }
 
 }

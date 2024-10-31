@@ -16,11 +16,11 @@ namespace TAF.PageObjects
             _driver = driver;
             WebDriverProvider.WebDriver = _driver;
         }
-        public IInputField Login => new InputField(By.XPath("//input[@name = 'login']"));
-        public IInputField Password => new InputField(By.XPath("//input[@name = 'password']"));
-        public IButton LoginButton => new Button(By.XPath("//button[text()='Login']"));
-        public ITextField TextErrorLogin => new TextField(By.XPath("//div[contains(@class, 'login-field')]//div[contains(@class, 'error')]"));
-        public ITextField TextErrorPassword => new TextField(By.XPath("//div[contains(@class, 'password-field')]//div[contains(@class, 'error')]"));
+        public InputField Login => new InputField(By.XPath("//input[@name = 'login']"));
+        public InputField Password => new InputField(By.XPath("//input[@name = 'password']"));
+        public Button LoginButton => new Button(By.XPath("//button[text()='Login']"));
+        public TextField TextErrorLogin => new TextField(By.XPath("//div[contains(@class, 'login-field')]//div[contains(@class, 'error')]"));
+        public TextField TextErrorPassword => new TextField(By.XPath("//div[contains(@class, 'password-field')]//div[contains(@class, 'error')]"));
 
         public void SetLogin(string login, string password)
         {
