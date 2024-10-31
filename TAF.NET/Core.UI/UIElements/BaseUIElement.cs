@@ -91,10 +91,9 @@ namespace TAF.Core.UI.UIElements
             }
         }
 
-
         public string GetText()
         {
-            return WebElement.Text.ToString();
+            return WebElement.Text;
         }
 
         public bool IsDisplayed()
