@@ -6,9 +6,6 @@ namespace TAF.Core.UI.UIElements
     {
         public InputField(By locator)
             : base(locator) { }
-        public string Text
-        {
-            get => GetText();
-        }
+        public string Text => GetText();
     }
 }
