@@ -36,7 +36,7 @@ namespace TAF.Core.Helpers
                 }
                 catch (Exception e)
                 {
-                    Log.Logger.Error(e, "Error while waiting for condition.");
+                    Log.Logger.Information(e.Message, "Error while waiting for condition.");
                     Task.Delay(MillisecondsDelay).Wait();
                 }
             }

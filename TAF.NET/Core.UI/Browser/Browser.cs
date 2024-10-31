@@ -1,20 +1,18 @@
 ﻿using OpenQA.Selenium;
 using TAF.Core.Configuration;
-using TAF.Core.UI.Browser;
 using Serilog;
 
 namespace TAF.Core.UI.Browser
 {
     public class Browser : IBrowser
     {
-        private static readonly Lazy<Browser> instance = new Lazy<Browser>(() => new Browser());
-        private IWebDriver webDriver;
+        private static readonly Lazy<Browser> _instance = new Lazy<Browser>(() => new Browser());
 
         private Browser() { }
 
-        public static Browser Instance => instance.Value;
+        public static Browser Instance => _instance.Value;
 
-        public IWebDriver WebDriver => this.webDriver;
+        public IWebDriver WebDriver { get; private set; }
 
         public void Initialize()
         {
@@ -25,8 +23,8 @@ namespace TAF.Core.UI.Browser
                 {
                     throw new InvalidOperationException("Test settings are not configured properly.");
                 }
-                this.webDriver = BrowserFactory.GetDriver(testSettings.BrowserType);
-                this.webDriver.Manage().Window.Maximize();
+                WebDriver = BrowserFactory.GetDriver(testSettings.BrowserType);
+                WebDriver.Manage().Window.Maximize();
             }
             catch (Exception ex)
             {
@@ -39,8 +37,8 @@ namespace TAF.Core.UI.Browser
         {
             try
             {
-                this.webDriver?.Quit();
-                this.webDriver?.Dispose();
+                WebDriver?.Quit();
+                WebDriver?.Dispose();
             }
             catch (Exception ex)
             {
@@ -48,7 +46,7 @@ namespace TAF.Core.UI.Browser
             }
             finally
             {
-                this.webDriver = null;
+                WebDriver = null;
             }
         }
     }
