@@ -7,7 +7,6 @@ namespace TestsTAF.NET.Test.UI
 {
     public abstract class BaseUITest
     {
-
         protected static Browser Browser => Browser.Instance;
         protected WebDriverWait Wait;
 

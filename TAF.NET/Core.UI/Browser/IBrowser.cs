@@ -8,5 +8,4 @@ namespace TAF.Core.UI.Browser
         void Cleanup();
         IWebDriver WebDriver { get; }
     }
-
 }
