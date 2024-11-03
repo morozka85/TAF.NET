@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TAF.Core.UI.UIElements
+﻿namespace TAF.Core.UI.UIElements
 {
-    public interface ITextField : IBaseUIElement
+    public interface ITextField
     {
-        public string Text
-        {
-            get => GetText();
-        }
+        string Text { get; }
+        bool IsDisplayed();
     }
 
 }

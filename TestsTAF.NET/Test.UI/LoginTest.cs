@@ -1,7 +1,6 @@
-﻿using Serilog;
-using TAF.Core.Waiters;
+﻿using FluentAssertions;
+using Serilog;
 using TAF.PageObjects;
-using NUnit.Framework;
 
 namespace TestsTAF.NET.Test.UI
 {
@@ -12,12 +11,11 @@ namespace TestsTAF.NET.Test.UI
         public void LoginWithBadCredsTest(string login, string password, string expectedResult)
         {
             Log.Information("Starting Login With Bad Creds.");
-            //var loginPage = new LoginPage(Browser.WebDriver);
-            var loginPage = new LoginPage();
-            loginPage.SetLogin(login, password);
-            Assert.That(loginPage.TextErrorLogin.IsDisplayed(), $"Expected error is not got");
-            Assert.That(loginPage.TextErrorPassword.IsDisplayed(), $"Expected error is not got");
-            Assert.That(loginPage.TextErrorLogin.GetText(), Is.EqualTo(expectedResult));
+            Pages.LoginPage.SetLogin(login, password);
+            Pages.LoginPage.TextErrorLogin.IsDisplayed().Should().BeTrue("Login error message is not displayed");
+            Pages.LoginPage.TextErrorPassword.IsDisplayed().Should().BeTrue("Password error message is not displayed");
+            Pages.LoginPage.TextErrorLogin.Text.Should().Be(expectedResult, "Actual login error message does not match expected result");
+            Pages.LoginPage.TextErrorPassword.Text.Should().Be(expectedResult, "Actual password error message does not match expected result.");
             Log.Information($"The LoginWithBadCredsTest is comleted succesfully");
         }
     }

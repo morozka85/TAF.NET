@@ -24,11 +24,10 @@ namespace TAF.Core.UI.Browser
                     throw new InvalidOperationException("Test settings are not configured properly.");
                 }
                 WebDriver = BrowserFactory.GetDriver(testSettings.BrowserType);
-                WebDriver.Manage().Window.Maximize();
             }
             catch (Exception ex)
             {
-                Log.Information($"Browser initialization failed: {ex.Message}");
+                Log.Information("Browser initialization failed:", ex.Message);
                 throw;
             }
         }
@@ -42,7 +41,7 @@ namespace TAF.Core.UI.Browser
             }
             catch (Exception ex)
             {
-                Log.Information($"Error during WebDriver cleanup: {ex.Message}");
+                Log.Information("Error during WebDriver cleanup:", ex.Message);
             }
             finally
             {

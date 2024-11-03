@@ -1,6 +1,6 @@
 ﻿namespace TAF.Core.UI.UIElements
 {
-    public interface IInputField : IBaseUIElement
+    public interface IInputField
     {
         string Text { get; }
         void InputText(string text);

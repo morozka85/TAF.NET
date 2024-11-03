@@ -1,16 +1,14 @@
-﻿using OpenQA.Selenium.Support.UI;
-using Serilog;
+﻿using Serilog;
 using TAF.Core.Configuration;
+using TAF.Core.Helpers;
 using TAF.Core.UI.Browser;
 
 namespace TestsTAF.NET.Test.UI
 {
     public abstract class BaseUITest
     {
-
         protected static Browser Browser => Browser.Instance;
-        protected WebDriverWait Wait;
-
+        
         [OneTimeSetUp]
         public void GlobalSetup()
         {
@@ -22,7 +20,6 @@ namespace TestsTAF.NET.Test.UI
 
             Log.Information("Initializing browser...");
             Browser.Initialize();
-            Wait = new WebDriverWait(Browser.WebDriver, TimeSpan.FromSeconds(10));
         }
 
         [SetUp]
@@ -31,12 +28,16 @@ namespace TestsTAF.NET.Test.UI
             var testSettings = ConfigurationHelper.GetApplicationConfiguration<TestSettings>();
             Browser.WebDriver.Navigate().GoToUrl(testSettings.BaseUrl);
             Log.Information("Browser initialized and navigated to Base URL: " + testSettings.BaseUrl);
-   
+
         }
 
         [TearDown]
         public void Teardown()
         {
+            if (TestContext.CurrentContext.Result.Outcome != NUnit.Framework.Interfaces.ResultState.Success)
+            {
+                ScreenshotHelper.SaveScreenshot(Browser.WebDriver);
+            }
             try
             {
                 Browser.WebDriver.Manage().Cookies.DeleteAllCookies();

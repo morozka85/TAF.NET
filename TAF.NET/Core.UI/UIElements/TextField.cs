@@ -7,9 +7,6 @@ namespace TAF.Core.UI.UIElements
         public TextField(By locator)
             : base(locator) { }
 
-        public string Text
-        {
-            get => GetText();
-        }
+        public string Text => GetText();
     }
 }

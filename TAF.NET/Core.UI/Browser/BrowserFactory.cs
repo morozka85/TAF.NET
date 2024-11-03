@@ -6,11 +6,20 @@ namespace TAF.Core.UI.Browser
 {
     public static class BrowserFactory
     {
+        public static IWebDriver GetDriver(string browserType)
+        {
+            return browserType switch
+            {
+                "Chrome" => new ChromeDriver(GetChromeOptions()),
+                "Edge" => new EdgeDriver(GetEdgeOptions()),
+                _ => throw new ArgumentException($"Unsupported browser: {browserType}")
+            };
+        }
         private static ChromeOptions GetChromeOptions()
         {
             var options = new ChromeOptions();
             options.AddArgument("--start-maximized");
-           // options.AddArgument("headless");
+            options.AddArgument("headless");
             
             return options;
         }
@@ -18,17 +27,9 @@ namespace TAF.Core.UI.Browser
         private static EdgeOptions GetEdgeOptions()
         {
             var options = new EdgeOptions();
+            options.AddArgument("--start-maximized");
+            options.AddArgument("headless");
             return options;
-        }
-
-        public static IWebDriver GetDriver(string browserType)
-        {
-            return browserType switch
-            {
-                "Chrome" => new ChromeDriver(),
-                "Edge" => new EdgeDriver(),
-                _ => throw new ArgumentException($"Unsupported browser: {browserType}")
-            };
         }
     }
 }

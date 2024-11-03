@@ -6,32 +6,12 @@ namespace TAF.Core.UI.UIElements
 {
     public abstract class BaseUIElement : IBaseUIElement
     {
-        //protected IWebDriver WebDriver => Helpers.WebDriverProvider.WebDriver;
         protected IWebDriver WebDriver = Browser.Browser.Instance.WebDriver;
         protected By Locator { get; private set; }
 
         public BaseUIElement(By locator)
         {
             Locator = locator;
-        }
-
-        private IWebElement GetElement()
-        {
-            IWebElement element = null;
-            try
-            {
-                Waiter.WaitFor(() =>
-                {
-                    element = WebDriver.FindElement(Locator);
-                    return element.Enabled;
-                });
-                return element;
-            }
-            catch (TimeoutException)
-            {
-                Log.Logger.Warning($"Element not found within the timeout period for locator: {Locator}");
-                return null;
-            }
         }
 
         public IWebElement WebElement
@@ -49,49 +29,51 @@ namespace TAF.Core.UI.UIElements
 
         public void Click()
         {
-            try
-            {
-                if (IsDisplayed())
-                {
-                    WebElement.Click();
-                }
-                else
-                {
-                    Log.Logger.Warning($"Element {WebElement} is not displayed");
-                }
-            }
-            catch (WebDriverException exception)
-            {
-                Log.Logger.Warning($"WebDriverException: {exception.StackTrace}");
-            }
+            Log.Logger.Information($"Click on the Element with locator {Locator}");
+            WebElement.Click();
         }
 
         public void InputText(string text)
         {
-            try
-            {
-                WebElement.Clear();
-                WebElement.SendKeys(text);
-            }
-            catch (WebDriverException exception)
-            {
-                Log.Logger.Warning($"WebDriverException: {exception.StackTrace}");
-            }
+            Log.Logger.Information($"Input text into the Element with locator {Locator}");
+            WebElement.Clear();
+            WebElement.SendKeys(text);
         }
 
         public string GetText()
         {
+            Log.Logger.Information($"Get text from Element with locator {Locator}");
             return WebElement.Text;
         }
 
         public bool IsDisplayed()
         {
+            Log.Logger.Information($"Check if the Element is displayed with locator {Locator}");
             return WebElement.Displayed;
         }
 
         public bool IsEnabled()
         {
+            Log.Logger.Information($"Check if the Element is enabled with locator {Locator}");
             return WebElement.Enabled;
+        }
+        private IWebElement GetElement()
+        {
+            IWebElement element = null;
+            try
+            {
+                Waiter.WaitFor(() =>
+                {
+                    element = WebDriver.FindElement(Locator);
+                    return element.Enabled;
+                });
+                return element;
+            }
+            catch (TimeoutException)
+            {
+                Log.Logger.Warning($"Element not found within the timeout period for locator {Locator}");
+                return null;
+            }
         }
     }
 }
