@@ -29,6 +29,7 @@ namespace TAF.Core.UI.Browser
             var options = new EdgeOptions();
             options.AddArgument("--start-maximized");
             options.AddArgument("headless");
+            
             return options;
         }
     }
