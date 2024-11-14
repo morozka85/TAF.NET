@@ -24,6 +24,23 @@ namespace BusinessAPI.Services
             return response.Data.Id;
         }
 
+        public DashboardModel CreateDashbord(DashboardModel dashboard)
+        {
+            Log.Logger.Information("Try to create the Dashboard");
+            Log.Logger.Information($"Dashboard model name is {dashboard.Name}, description is {dashboard.Id}");
+
+            var response = _apiClient.SendRequest<DashboardModel>("dashboard", Method.Post, dashboard);
+
+            if (!response.IsSuccessful && response.Data?.Id != 0)
+            {
+                throw new InvalidOperationException($"Failed to create the Dashboard. Status code: {response.StatusCode}. Response: {response.Content}");
+            }
+
+            Log.Logger.Information($"Dashboard created successfully with ID: {response.Data.Id}");
+
+            return response.Data;
+        }
+
         public RestResponse<DashboardModel> TryCreateDashbord(DashboardModel dashboard)
         {
             Log.Logger.Information($"Try to create the Dashboard");

@@ -11,7 +11,7 @@ namespace TestsTAF.NET.Test.API
         protected DashboardService DashboardService;
 
         [OneTimeSetUp]
-        public void GlobalSetup()
+        public void GlobalSetUp()
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -25,20 +25,19 @@ namespace TestsTAF.NET.Test.API
         }
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-
             Log.Information("Setting up for API test.");
         }
 
         [TearDown]
-        public void Teardown()
+        public void TearDown()
         {
             Log.Information("Tearing down after API test.");
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public void GlobalTearDaown()
         {
             Log.Information("Cleaning up after all API tests.");
             Log.CloseAndFlush();

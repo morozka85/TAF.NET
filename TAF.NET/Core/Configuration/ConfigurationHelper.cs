@@ -9,6 +9,7 @@ namespace TAF.Core.Configuration
         {
             return new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.local.json", true)
                 .Build();
         }
 

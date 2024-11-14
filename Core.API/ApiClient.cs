@@ -1,9 +1,8 @@
 ﻿using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 
-
 namespace CoreAPI
-    {
+{
     public class ApiClient
     {
         private readonly RestClient _client;
