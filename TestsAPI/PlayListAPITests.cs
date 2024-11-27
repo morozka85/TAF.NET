@@ -5,7 +5,7 @@ using System.Net;
 
 namespace TestsAPI
 {
-    public class PlayListAPITestss : BaseApiTest
+    public class PlayListApiTestss : BaseApiTest
     {
         private string UserId;
         private PlaylistModel _playlistModelExpected;
@@ -13,7 +13,7 @@ namespace TestsAPI
         private UserdModel _userdModel;
 
         [SetUp]
-        public void CreatePlayListPrecondition()
+        public void PlayListPrecondition()
         {
             var name = "Name" + Guid.NewGuid();
             var description = "Desciprition";
@@ -27,8 +27,8 @@ namespace TestsAPI
         [Test]
         public void CreatePlayListTest()
         {
-            _playlistModelActual.Name.Should().Be(_playlistModelExpected.Name, "The playlist name should match");
-            _playlistModelActual.Description.Should().Be(_playlistModelExpected.Description, "The dashboard description should match");
+            _playlistModelActual.Name.Should().Be(_playlistModelExpected.Name);
+            _playlistModelActual.Description.Should().Be(_playlistModelExpected.Description);
         }
 
         [Test]
@@ -44,6 +44,16 @@ namespace TestsAPI
 
             updatedPlaylistResponse.Should().NotBeNull();
             updatedPlaylistResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Test]
+        public void GetPlayListTest()
+        {  
+            var gotenPlaylist = PlayListService.GetPlaylistById(_playlistModelActual.Id);
+
+            gotenPlaylist.Should().NotBeNull();
+            _playlistModelActual.Name.Should().Be(_playlistModelActual.Name);
+            _playlistModelActual.Description.Should().Be(_playlistModelActual.Description);
         }
     }
 }
