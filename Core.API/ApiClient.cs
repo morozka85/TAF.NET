@@ -12,7 +12,7 @@ namespace CoreAPI
         {
             var options = new RestClientOptions(baseUrlApi);
             _client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson());
-            _client.AddDefaultHeader("Authorization", $"bearer {token}");
+            _client.AddDefaultHeader("Authorization", $"Bearer {token}");
         }
 
         public RestResponse<T> SendRequest<T>(string resource, Method method, object body = null)

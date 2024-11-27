@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreUI\CoreUI.csproj" />
+    <ProjectReference Include="..\Core.API\CoreAPI.csproj" />
+    <ProjectReference Include="..\ModelsAPI\ModelsAPI.csproj" />
   </ItemGroup>
 
 </Project>
